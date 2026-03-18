@@ -51,4 +51,38 @@ public:
         return heap.empty();
     }
     //Insert a new player into the heap
+    void insert(Player p){
+        heap.push_back(p);
+        heapify_up(heap.size() - 1);
+    }
+    Player peek(){
+        if (is_empty()){//If heap is empty, throw an error
+            throw runtime_error("Heap is empty on peek");
+        }
+        return heap[0];
+    }
+    Player extract_max(){
+        if(is_empty()){//If heap is empty, throw an error
+            throw runtime_error("Heap is empty on extract max");
+        }
+        Player best_player = heap[0];
+        heap[0] = heap[heap.size() - 1];//Move the last player to the root
+        heap.erase(heap.end() - 1);//Since we moved last player to root, we can remove the last element to prevent copy
+        heapify_down(0);//heapify down to restore the heap
+        return best_player;
+    }//Return and remove the player with the highest grade (root of the heap)
+
+    //Would we need more than 1 player per position? If yes, we can use the following functions:
+    vector<Player> get_top_n(int n){//Note that this will call extract_max n times, so it will modify the heap as well
+        if (n > heap.size()){
+            throw runtime_error("Not enough players in the heap to peek top n");
+        }
+        vector<Player> top_players;
+        int size = heap.size();
+        int count = min(n, size);
+        for (int i = 0; i < count; i++){
+            top_players.push_back(extract_max());
+        }
+        return top_players;
+    }
 };
