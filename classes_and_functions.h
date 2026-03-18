@@ -14,10 +14,10 @@ struct Player{
     float grade;
 };
 
-float compute_grade(Player& p){
+float compute_grade(Player& p){ //Rank players based on this final grade 
     float final_grade;
     if (p.position == "PG"){
-        final_grade = (p.points * 0.6 + p.assists * 0.4);
+        final_grade = (p.points * 0.6 + p.assists * 0.2 + p.three_pm * 0.2);
     }
     else if(p.position == "SG"){
         final_grade = (p.points * 0.6 + p.three_pm * 0.4);
