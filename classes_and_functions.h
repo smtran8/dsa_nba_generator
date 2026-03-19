@@ -12,7 +12,7 @@ struct Player{
     string team;
     string position;
 
-    float points, assists, rebounds, fg_pct, three_pm, blocks;
+    float ppg, apg, rpg, fg_pct, three_pm_pg, bpg;
     //Points, Assists, Rebounds, Field Goal Percentage, Three Pointers Made, Blocks - All per game
     float grade;
 };
@@ -20,27 +20,27 @@ struct Player{
 float compute_grade(Player& p){ //Rank players based on this final grade 
     float final_grade;
     if (p.position == "PG"){
-        final_grade = (p.points * 0.6 + p.assists * 0.2 + p.three_pm * 0.2);
+        final_grade = (p.ppg * 0.6 + p.apg * 0.2 + p.three_pm_pg * 0.2);
     }
     else if(p.position == "SG"){
-        final_grade = (p.points * 0.6 + p.three_pm * 0.4);
+        final_grade = (p.ppg * 0.6 + p.three_pm_pg * 0.4);
     }
     else if(p.position == "SF"){
-        final_grade = (p.points * 0.6 + p.rebounds * 0.4);
+        final_grade = (p.ppg * 0.6 + p.rpg * 0.4);
     }
     else if(p.position == "PF"){
-        final_grade = (p.fg_pct * 0.6 * 100 + p.rebounds * 0.4);//fg_pct is a percent, so x 100 to get value 
-        //Really pay attention to this fg_pct => Check Jack's data handling
+        final_grade = (p.fg_pct * 0.6 * 100 + p.rpg * 0.4);//fg_pct is a percent, so x 100 to get value 
+        //Really pay attention to this fg_pct => Check Jack's data handling => Jack uses decimal, so no problem
     }
     else if(p.position == "C"){
-        final_grade = (p.rebounds * 0.6 + p.blocks * 0.4);
+        final_grade = (p.rpg * 0.6 + p.bpg * 0.4);
     }
     p.grade = final_grade;
     return final_grade;
 }
 
 // reads in data & returns vector of all players with all attributes we want
-vector<Player> load_players(const string& filename) {
+vector<Player> load_players(const string& filename) {//We would use the data from the file player per game.csv
   vector<Player> players;
   ifstream file(filename);
   if (!file.is_open()) {
@@ -63,12 +63,12 @@ vector<Player> load_players(const string& filename) {
         p.name=row[2];
         p.team=row[5];
         p.position=row[6];
-        p.points=stof(row[31]);
-        p.assists=stof(row[26]);
-        p.rebounds=stof(row[25]);
+        p.ppg=stof(row[31]);
+        p.apg=stof(row[26]);
+        p.rpg=stof(row[25]);
         p.fg_pct=stof(row[12]);
-        p.three_pm=stof(row[13]);
-        p.blocks=stof(row[28]);
+        p.three_pm_pg=stof(row[13]);
+        p.bpg=stof(row[28]);
         compute_grade(p);
         players.push_back(p);
         }

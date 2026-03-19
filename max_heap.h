@@ -95,12 +95,12 @@ void add_players(vector<Player>& players, string name, string team, string pos, 
     p.name = name;
     p.team = team;  
     p.position = pos;
-    p.points = pts;
-    p.assists = ast;
-    p.rebounds = reb;
+    p.ppg = pts;
+    p.apg = ast;
+    p.rpg = reb;
     p.fg_pct = fg_pct;
-    p.three_pm = three_pm;
-    p.blocks = blocks;
+    p.three_pm_pg = three_pm;
+    p.bpg = blocks;
     compute_grade(p);
     players.push_back(p);
 }
