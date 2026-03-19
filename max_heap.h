@@ -90,18 +90,5 @@ public:
         return top_players;
     }
 };
-void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks){
-    Player p;
-    p.name = name;
-    p.team = team;  
-    p.position = pos;
-    p.ppg = pts;
-    p.apg = ast;
-    p.rpg = reb;
-    p.fg_pct = fg_pct;
-    p.three_pm_pg = three_pm;
-    p.bpg = blocks;
-    compute_grade(p);
-    players.push_back(p);
-}
-
+void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks);
+void build_different_team(const vector<Player> &all_players, string team_code);
