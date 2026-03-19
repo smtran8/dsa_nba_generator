@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 
@@ -34,3 +36,39 @@ float compute_grade(Player& p){ //Rank players based on this final grade
     p.grade = final_grade;
     return final_grade;
 }
+
+// reads in data & returns vector of all players with all attributes we want
+vector<Player> load_players(const string& filename) {
+  vector<Player> players;
+  ifstream file(filename);
+  if (!file.is_open()) {
+    cout << "Error opening file" << endl;
+    return players;
+  }
+  string line;
+  getline(file, line);
+  while (getline(file,line)) {
+    stringstream ss(line);
+    vector<string> row;
+    string value;
+    while (getline(ss, value, ',')) {
+      row.push_back(value);
+      }
+      if (row.size()<32) {
+        continue;
+       }
+        Player p;
+        p.name=row[2];
+        p.team=row[5];
+        p.position=row[6];
+        p.points=stof(row[31]);
+        p.assists=stof(row[26]);
+        p.rebounds=stof(row[25]);
+        p.fg_pct=stof(row[12]);
+        p.three_pm=stof(row[13]);
+        p.blocks=stof(row[28]);
+        compute_grade(p);
+        players.push_back(p);
+        }
+   return players;
+  }
