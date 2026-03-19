@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
@@ -29,6 +30,7 @@ float compute_grade(Player& p){ //Rank players based on this final grade
     }
     else if(p.position == "PF"){
         final_grade = (p.fg_pct * 0.6 * 100 + p.rebounds * 0.4);//fg_pct is a percent, so x 100 to get value 
+        //Really pay attention to this fg_pct => Check Jack's data handling
     }
     else if(p.position == "C"){
         final_grade = (p.rebounds * 0.6 + p.blocks * 0.4);
@@ -72,3 +74,4 @@ vector<Player> load_players(const string& filename) {
         }
    return players;
   }
+

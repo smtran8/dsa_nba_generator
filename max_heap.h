@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <string>
 #include "classes_and_functions.h"
@@ -31,11 +32,14 @@ class MaxHeap{
     }
     void heapify_down(int i){ //Used for after extracting the max, the last node placed at root might be too small => heapify down
         int largest = i;
-        if (has_left_child(i) && heap[find_left_child(i)].grade > heap[largest].grade){
-            largest = find_left_child(i);
+        int left = find_left_child(i);
+        int right = find_right_child(i);
+
+        if (has_left_child(i) && heap[left].grade > heap[largest].grade){
+            largest = left;
         }
-        if (has_right_child(i) && heap[find_right_child(i)].grade > heap[largest].grade){
-            largest = find_right_child(i);
+        if (has_right_child(i) && heap[right].grade > heap[largest].grade){
+            largest = right;
         }
         if (largest != i){
             swap(heap[i], heap[largest]);
@@ -86,3 +90,18 @@ public:
         return top_players;
     }
 };
+void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks){
+    Player p;
+    p.name = name;
+    p.team = team;  
+    p.position = pos;
+    p.points = pts;
+    p.assists = ast;
+    p.rebounds = reb;
+    p.fg_pct = fg_pct;
+    p.three_pm = three_pm;
+    p.blocks = blocks;
+    compute_grade(p);
+    players.push_back(p);
+}
+
