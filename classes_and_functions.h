@@ -12,9 +12,11 @@ struct Player{
     string team;
     string position;
 
-    float ppg, apg, rpg, fg_pct, three_pm_pg, bpg;
+    float ppg, apg, rpg, fg_pct, three_pm_pg, bpg, spg;
     //Points, Assists, Rebounds, Field Goal Percentage, Three Pointers Made, Blocks - All per game
     float grade;
+
+    int season_count = 1;//This will be used to calculate a player's career stats, not just one season in the dataset
 };
 
 float compute_grade(Player& p);

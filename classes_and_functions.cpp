@@ -8,22 +8,22 @@ using namespace std;
 
 
 float compute_grade(Player& p){ //Rank players based on this final grade 
-    float final_grade;
+    float final_grade;//Need to rework on fg_pct, because if 30% fg_pct is very low, but it x100 so 30, which is equal to 30ppg
     if (p.position == "PG"){
-        final_grade = (p.ppg * 0.3 + p.apg * 0.4 + p.three_pm_pg * 0.1 + p.fg_pct * 0.1 * 100 + p.rpg * 0.1);//fg_pct is a percent, so x 100 to get value
+        final_grade = (p.ppg * 0.2 + p.apg * 0.5 + p.three_pm_pg * 0.15 + p.fg_pct * 0.05 * 100 + p.rpg * 0.1);//fg_pct is a percent, so x 100 to get value
     }
     else if(p.position == "SG"){
-        final_grade = (p.ppg * 0.4 + p.three_pm_pg * 0.2 + p.fg_pct * 0.2 * 100 + p.apg * 0.1 + p.bpg * 0.1);
+        final_grade = (p.ppg * 0.35 + p.three_pm_pg * 0.3 + p.fg_pct * 0.05 * 100 + p.apg * 0.2 + p.spg * 0.1);
     }
     else if(p.position == "SF"){
         final_grade = (p.ppg * 0.3 + p.rpg * 0.2 + p.three_pm_pg * 0.2 + p.bpg * 0.15 + p.apg * 0.15);
     }
     else if(p.position == "PF"){
-        final_grade = (p.fg_pct * 0.4 * 100 + p.rpg * 0.3 + p.ppg * 0.1 + p.bpg * 0.1 + p.three_pm_pg * 0.1);
+        final_grade = (p.fg_pct * 0.05 * 100 + p.rpg * 0.35 + p.ppg * 0.4 + p.bpg * 0.1 + p.three_pm_pg * 0.1);
         //Really pay attention to this fg_pct => Check Jack's data handling => Jack uses decimal, so no problem
     }
     else if(p.position == "C"){
-        final_grade = (p.rpg * 0.4 + p.bpg * 0.3 + p.fg_pct * 0.2 * 100 + p.ppg * 0.05 + p.apg * 0.05);
+        final_grade = (p.rpg * 0.4 + p.bpg * 0.45 + p.fg_pct * 0.05 * 100 + p.ppg * 0.05 + p.apg * 0.05);
     }
     p.grade = final_grade;
     return final_grade;
@@ -63,7 +63,10 @@ vector<Player> load_players(const string& filename) {//We would use the data fro
     while (getline(ss, value, ',')) {
         row.push_back(value);
     }
-
+    int season = guard_stof(row[0]);
+    if (season <= 1985) {//Take players from 1990s or above
+        continue;
+    }
     if (row.size()<32) {//The file has 32 columns
         continue;
     }
@@ -78,11 +81,12 @@ vector<Player> load_players(const string& filename) {//We would use the data fro
     p.position=row[6];
     p.ppg=guard_stof(row[31]);
     p.apg=guard_stof(row[26]);
+    p.spg = guard_stof(row[27]);
     p.rpg=guard_stof(row[25]);
     p.fg_pct=guard_stof(row[12]);
     p.three_pm_pg=guard_stof(row[13]);
     p.bpg=guard_stof(row[28]);
-    compute_grade(p);
+    compute_grade(p);//Jack called compute_grade here
     players.push_back(p);
     }
 
