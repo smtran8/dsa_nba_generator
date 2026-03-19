@@ -41,9 +41,9 @@ void build_different_team(const vector<Player> &all_players, string team_code){
         }
     }
     cout << "Best Starting 5 for " << team_code << ":" << endl;
-    cout << "PG: " << pg_heap.peek().name << " Grades: " << pg_heap.peek().grade << endl;
-    cout << "SG: " << sg_heap.peek().name << " Grades: " << sg_heap.peek().grade << endl;
-    cout << "SF: " << sf_heap.peek().name << " Grades: " << sf_heap.peek().grade << endl;
-    cout << "PF: " << pf_heap.peek().name << " Grades: " << pf_heap.peek().grade << endl;
-    cout << "C: " << c_heap.peek().name << " Grades: " << c_heap.peek().grade << endl;
+    cout << "PG: " << pg_heap.peek().name << " - Grades: " << pg_heap.peek().grade << endl;
+    cout << "SG: " << sg_heap.peek().name << " - Grades: " << sg_heap.peek().grade << endl;
+    cout << "SF: " << sf_heap.peek().name << " - Grades: " << sf_heap.peek().grade << endl;
+    cout << "PF: " << pf_heap.peek().name << " - Grades: " << pf_heap.peek().grade << endl;
+    cout << "C: " << c_heap.peek().name << " - Grades: " << c_heap.peek().grade << endl;
 }

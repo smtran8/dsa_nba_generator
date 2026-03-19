@@ -1,7 +1,5 @@
 #include <vector>
 #include "classes_and_functions.h"
-#include "max_heap.cpp"
-#include "classes_and_functions.cpp"
 #include "max_heap.h"
 #include <iostream>
 #include <string>
