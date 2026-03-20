@@ -10,20 +10,20 @@ using namespace std;
 float compute_grade(Player& p){ //Rank players based on this final grade 
     float final_grade;//Need to rework on fg_pct, because if 30% fg_pct is very low, but it x100 so 30, which is equal to 30ppg
     if (p.position == "PG"){
-        final_grade = (p.ppg * 0.2 + p.apg * 0.5 + p.three_pm_pg * 0.15 + p.fg_pct * 0.05 * 100 + p.rpg * 0.1);//fg_pct is a percent, so x 100 to get value
+        final_grade = (p.apg * 0.35 + p.ppg * 0.30 + p.spg * 0.15 + p.three_pm_pg * 0.10 + p.rpg * 0.10);
     }
     else if(p.position == "SG"){
-        final_grade = (p.ppg * 0.35 + p.three_pm_pg * 0.3 + p.fg_pct * 0.05 * 100 + p.apg * 0.2 + p.spg * 0.1);
+        final_grade = (p.ppg * 0.30 + p.three_pm_pg * 0.25 + p.spg * 0.15 + p.apg * 0.20 + p.rpg * 0.1);
     }
     else if(p.position == "SF"){
         final_grade = (p.ppg * 0.3 + p.rpg * 0.2 + p.three_pm_pg * 0.2 + p.bpg * 0.15 + p.apg * 0.15);
     }
     else if(p.position == "PF"){
-        final_grade = (p.fg_pct * 0.05 * 100 + p.rpg * 0.35 + p.ppg * 0.4 + p.bpg * 0.1 + p.three_pm_pg * 0.1);
+        final_grade = (p.ppg * 0.35 + p.rpg * 0.30 + p.bpg * 0.15 + p.three_pm_pg * 0.10 + p.spg * 0.1);
         //Really pay attention to this fg_pct => Check Jack's data handling => Jack uses decimal, so no problem
     }
     else if(p.position == "C"){
-        final_grade = (p.rpg * 0.4 + p.bpg * 0.45 + p.fg_pct * 0.05 * 100 + p.ppg * 0.05 + p.apg * 0.05);
+        final_grade = (p.rpg * 0.35 + p.bpg * 0.30 + p.ppg * 0.20 + p.fg_pct * 0.10 * 50 + p.apg * 0.05);
     }
     p.grade = final_grade;
     return final_grade;

@@ -22,6 +22,8 @@ void add_players(vector<Player>& players, string name, string team, string pos, 
 
 void build_different_team(const vector<Player> &all_players, string team_code){
     unordered_map<string, Player> average_players;//Key is name, value is the actual Player object
+    unordered_map<string, unordered_map<string, int>> position_counts; //Get this map to keep track of the most played positions for a player career
+    //It is needed because for example, Kobe Bryant played mostly as a SG, but his last entries (last season) was a PF and our data picked up PF
     for (const auto& p : all_players) {
         if (p.team !=team_code) {
             continue;
@@ -38,6 +40,7 @@ void build_different_team(const vector<Player> &all_players, string team_code){
             average_players[p.name].spg += p.spg;
             average_players[p.name].season_count++;
         }
+        position_counts[p.name][p.position]++; //We will take the most frequent positions
     }
     for (auto& pair : average_players) {
         string key_name = pair.first;
@@ -51,14 +54,24 @@ void build_different_team(const vector<Player> &all_players, string team_code){
         value_player.spg /= value_player.season_count;
         value_player.bpg /= value_player.season_count;
 
+        string best_position = "";//Keep the position with most counts
+        int best_count = 0;
+
+        for (auto& position_pair : position_counts[value_player.name]) {
+            if (position_pair.second > best_count) {
+                best_count = position_pair.second;
+                best_position = position_pair.first;
+            }
+        }
+        value_player.position = best_position;//Reset the position
         compute_grade(value_player);//Call compute grade again because the grades calculated in load_data is not equivalent any more
     }
-    //for (auto& pair: average_players) {
-        //Player& p = pair.second;
-        //if (p.name == "Kobe Bryant") {
-            //cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
-        //}
-    //}
+    for (auto& pair: average_players) {
+        Player& p = pair.second;
+        if (p.name == "Dwyane Wade") {
+            cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
+        }
+    }
     MaxHeap pg_heap, sg_heap, sf_heap, pf_heap, c_heap;
     for (auto& pair : average_players){
         Player& p = pair.second;
