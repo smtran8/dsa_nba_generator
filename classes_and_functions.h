@@ -18,6 +18,9 @@ struct Player{
 
     int season_count = 1;//This will be used to calculate a player's career stats, not just one season in the dataset
 };
+struct TeamResult {
+    Player pg, sg, sf, pf, c;
+};
 
 float compute_grade(Player& p);
 

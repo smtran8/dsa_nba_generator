@@ -9,7 +9,14 @@ using namespace std;
 //but bad in other seasons, he is still likely to be picked
 int main(){
     vector<Player> all_players = load_players("player_per_game.csv");
-    build_different_team(all_players, "MIA");//1 player can be on the rosters of multiple teams; their scores can also be different per team
+    TeamResult team = build_different_team(all_players, "LAL");
+
+    cout << "PG: " << team.pg.name << endl;
+    cout << "SG: " << team.sg.name << endl;
+    cout << "SF: " << team.sf.name << endl;
+    cout << "PF: " << team.pf.name << endl;
+    cout << "C: "  << team.c.name  << endl;
+    //1 player can be on the rosters of multiple teams; their scores can also be different per team
     //cout << "Loaded " << all_players.size() << " data rows" << endl;
     //original data has 33280 rows, but after loading we have 25960 rows, so it was filtered by the constraint at least 10 minutes per game, and rows missing columns (Jack)
     return 0;
