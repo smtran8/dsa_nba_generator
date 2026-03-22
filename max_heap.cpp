@@ -20,7 +20,7 @@ void add_players(vector<Player>& players, string name, string team, string pos, 
     players.push_back(p);
 }
 
-void build_different_team(const vector<Player> &all_players, string team_code){
+TeamResult build_different_team(const vector<Player> &all_players, string team_code){
     unordered_map<string, Player> average_players;//Key is name, value is the actual Player object
     unordered_map<string, unordered_map<string, int>> position_counts; //Get this map to keep track of the most played positions for a player career
     //It is needed because for example, Kobe Bryant played mostly as a SG, but his last entries (last season) was a PF and our data picked up PF
@@ -93,10 +93,16 @@ void build_different_team(const vector<Player> &all_players, string team_code){
             }
         }
     }
-    cout << "Best Starting 5 for " << team_code << ":" << endl;
-    cout << "PG: " << pg_heap.peek().name << " - Grades: " << pg_heap.peek().grade << endl;
-    cout << "SG: " << sg_heap.peek().name << " - Grades: " << sg_heap.peek().grade << endl;
-    cout << "SF: " << sf_heap.peek().name << " - Grades: " << sf_heap.peek().grade << endl;
-    cout << "PF: " << pf_heap.peek().name << " - Grades: " << pf_heap.peek().grade << endl;
-    cout << "C: " << c_heap.peek().name << " - Grades: " << c_heap.peek().grade << endl;
+    TeamResult result;
+    if (!pg_heap.is_empty())
+        result.pg=pg_heap.peek();
+    if (!sg_heap.is_empty())
+        result.sg=sg_heap.peek();
+    if (!sf_heap.is_empty())
+        result.sf=sf_heap.peek();
+    if (!pf_heap.is_empty())
+        result.pf=pf_heap.peek();
+    if (!c_heap.is_empty())
+        result.c=c_heap.peek();
+    return result;
 }

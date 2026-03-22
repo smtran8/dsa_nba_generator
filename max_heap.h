@@ -91,4 +91,4 @@ public:
     }
 };
 void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks);
-void build_different_team(const vector<Player> &all_players, string team_code);
+TeamResult build_different_team(const vector<Player> &all_players, string team_code);
