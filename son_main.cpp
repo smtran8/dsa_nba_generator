@@ -21,47 +21,49 @@ int main(){
     //cout << "Loaded " << all_players.size() << " data rows" << endl;
     //original data has 33280 rows, but after loading we have 25960 rows, so it was filtered by the constraint at least 10 minutes per game, and rows missing columns (Jack)
 
-    sf::RenderWindow window(sf::VideoMode(1000,700), "NBA");
+    sf::RenderWindow window(sf::VideoMode(1400,900), "NBA");
+    float windowWidth=window.getSize().x;
+    //float windowHeight=window.getSize().y;
     sf::Font font;
-    font.loadFromFile("Roboto-VariableFont_wdth,wght.ttf");
+    font.loadFromFile("Burkhan.otf");
     //title line 1
     sf::Text titleLine1;
     titleLine1.setFont(font);
     titleLine1.setString("Select An NBA Team!");
-    titleLine1.setCharacterSize(36);
-    titleLine1.setFillColor(sf::Color::White);
+    titleLine1.setCharacterSize(75);
+    titleLine1.setFillColor(sf::Color::Black);
     // align center
     sf::FloatRect bounds1=titleLine1.getLocalBounds();
-    titleLine1.setOrigin(bounds1.width/2,bounds1.height/2);
-    titleLine1.setPosition(500,60);
+    titleLine1.setOrigin(bounds1.left+bounds1.width/2,bounds1.top+bounds1.height/2);
+    titleLine1.setPosition(windowWidth/2,50);
     // title line 2
     sf::Text titleLine2;
     titleLine2.setFont(font);
     titleLine2.setString("Receive Best Player Per Position (All-Time)");
-    titleLine2.setCharacterSize(36);
-    titleLine2.setFillColor(sf::Color::White);
+    titleLine2.setCharacterSize(75);
+    titleLine2.setFillColor(sf::Color::Black);
     // center
     sf::FloatRect bounds2=titleLine2.getLocalBounds();
-    titleLine2.setOrigin(bounds2.width/2,bounds2.height/2);
-    titleLine2.setPosition(500,110);
+    titleLine2.setOrigin(bounds2.left+bounds2.width/2,bounds2.top+bounds2.height/2);
+    titleLine2.setPosition(windowWidth/2, 135);
     // west text
     sf::Text westText;
     westText.setFont(font);
     westText.setString("West!");
-    westText.setCharacterSize(36);
-    westText.setFillColor(sf::Color(255,140,0)); //orange
-    sf::FloatRect westBounds=westText.getLocalBounds();
-    westText.setOrigin(westBounds.width/2,westBounds.height/2);
-    westText.setPosition(250,160);
+    westText.setCharacterSize(75);
+    westText.setFillColor(sf::Color::Black);
+    sf::FloatRect wBounds=westText.getLocalBounds();
+    westText.setOrigin(wBounds.left+wBounds.width/2,wBounds.top+bounds2.height/2);
+    westText.setPosition(350,245); // exact pos 25% of 1400 (x comp of window).
     // east text
     sf::Text eastText;
     eastText.setFont(font);
     eastText.setString("East!");
-    eastText.setCharacterSize(36);
-    eastText.setFillColor(sf::Color(255,140,0));
-    sf::FloatRect eastBounds=eastText.getLocalBounds();
-    eastText.setOrigin(eastBounds.width/2,eastBounds.height/2);
-    eastText.setPosition(750,160);
+    eastText.setCharacterSize(75);
+    eastText.setFillColor(sf::Color::Black);
+    sf::FloatRect eBounds=eastText.getLocalBounds();
+    eastText.setOrigin(eBounds.left+eBounds.width/2,eBounds.top+bounds2.height/2);
+    eastText.setPosition(1050,245); // exact pos 75% of 1400
     // load textures
     map<string,sf::Texture> textures; //easier texture access
     vector<string> teamCodes = {
@@ -77,11 +79,15 @@ int main(){
     }
     // create buttons by looping
     vector <LogoButton> buttons;
-    float startY=200;
-    float rowSpacing=120;
-    float colSpacing=100;
-    float westStartX=250-2*colSpacing;
-    float eastStartX=750-2*colSpacing;
+    float startY=300;
+    float rowSpacing=180;
+    float colSpacing=120;
+    float westCenter=350;
+    float eastCenter=1050;
+    int cols=5;
+    float totalWidth=(cols-1)*colSpacing;
+    float westStartX=westCenter-totalWidth/2-50;
+    float eastStartX=eastCenter-totalWidth/2 - 35;
 
     // generate west team buttons
     string west[3][5] = {
@@ -93,7 +99,7 @@ int main(){
         for (int c=0;c<5;c++) {
             LogoButton b;
             b.sprite.setTexture(textures[west[r][c]]);
-            b.sprite.setScale(0.12f,0.12f);
+            b.sprite.setScale(0.27f,0.27f);
             b.sprite.setPosition(westStartX+c*colSpacing,startY+r*rowSpacing);
             b.teamCode = west[r][c];
             buttons.push_back(b);
@@ -109,27 +115,43 @@ int main(){
         for (int c=0;c<5;c++) {
             LogoButton b;
             b.sprite.setTexture(textures[east[r][c]]);
-            b.sprite.setScale(0.12f,0.12f);
-            b.sprite.setPosition(eastStartX+c*colSpacing, startY+r*rowSpacing);
+            float x = eastStartX+c*colSpacing;
+            float y = startY+r*rowSpacing;
+            if (east[r][c]=="MIA") {
+                b.sprite.setScale(0.55f,0.55f);
+                x-=60;
+                y-=60;
+            }
+            else {
+                b.sprite.setScale(0.27f,0.27f);
+            }
+            b.sprite.setPosition(x,y);
             b.teamCode = east[r][c];
             buttons.push_back(b);
         }
     }
 
     //Back button
-    sf::RectangleShape backButton(sf::Vector2f(120,50));
-    backButton.setPosition(20,20);
+    sf::RectangleShape backButton(sf::Vector2f(150,80));
+    backButton.setPosition(0,0);
     backButton.setFillColor(sf::Color::Red);
 
     sf::Text backText;
     backText.setFont(font);
     backText.setString("Back");
-    backText.setCharacterSize(20);
+    backText.setColor(sf::Color::Black);
+    backText.setCharacterSize(50);
     backText.setOrigin(backText.getLocalBounds().width/2,backText.getLocalBounds().height/2);
-    backText.setPosition(80,45);
+    backText.setPosition(75,25);
+
+    sf::RectangleShape divider;
+    divider.setSize(sf::Vector2f(4,540));
+    divider.setPosition(705,245);
+    divider.setFillColor(sf::Color::Black);
 
     bool showTeam=false;
     TeamResult team;
+    string selectedTeam="";
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -142,7 +164,9 @@ int main(){
                 if (!showTeam) {
                     for (auto& b:buttons) {
                         if (b.sprite.getGlobalBounds().contains(x,y)) {
+                            // for line below, might need an if statement differentiating between heap or splay tree
                         team=build_different_team(players,b.teamCode);
+                        selectedTeam=b.teamCode;
                         showTeam=true;
                         }
                     }
@@ -152,37 +176,80 @@ int main(){
                 }
             }
         }
-        window.clear();
+        window.clear(sf::Color(255,140,0));
         //Menu
         if (!showTeam) {
             window.draw(titleLine1);
             window.draw(titleLine2);
             window.draw(westText);
             window.draw(eastText);
+            window.draw(divider);
             for (auto& b:buttons) {
                 window.draw(b.sprite);
             }
         }
         //View when you click on team
         else {
+            sf::Text teamText;
+            teamText.setFont(font);
+            teamText.setString(selectedTeam);
+            teamText.setCharacterSize(90);
+            teamText.setFillColor(sf::Color::Black);
+            sf::FloatRect tBounds=teamText.getLocalBounds();
+            teamText.setOrigin(tBounds.left+tBounds.width/2,tBounds.top+tBounds.height/2);
+            teamText.setPosition(windowWidth/2,120);
+            sf::Sprite teamLogo;
+            teamLogo.setTexture(textures[selectedTeam]);
+            if (selectedTeam=="MIA") {
+                teamLogo.setScale(1.0f,1.0f);
+            }
+            else {
+                teamLogo.setScale(0.75f,0.75f);
+            }
+            teamLogo.setPosition(windowWidth*0.75,70);
+            if (selectedTeam=="MIA") {
+                teamLogo.setPosition(windowWidth*0.75-50,40);
+            }
+            window.draw(teamText);
+            window.draw(teamLogo);
+
+            //center align player text
             sf::Text text;
             text.setFont(font);
-            text.setCharacterSize(24);
-
+            text.setCharacterSize(64);
+            text.setFillColor(sf::Color::Black);
+            float centerX=windowWidth/2;
+            float startY=250;
+            float spacing=90;
+            // pg
             text.setString("PG: " + team.pg.name);
-            text.setPosition(400,200);
+            sf::FloatRect rec=text.getLocalBounds();
+            text.setOrigin(rec.left+rec.width/2,rec.top+rec.height/2);
+            text.setPosition(centerX,startY);
             window.draw(text);
+            // sg
             text.setString("SG: " + team.sg.name);
-            text.setPosition(400,250);
+            rec=text.getLocalBounds();
+            text.setOrigin(rec.left+rec.width/2,rec.top+rec.height/2);
+            text.setPosition(centerX,startY+spacing);
             window.draw(text);
+            // sf
             text.setString("SF: " + team.sf.name);
-            text.setPosition(400,300);
+            rec=text.getLocalBounds();
+            text.setOrigin(rec.left+rec.width/2, rec.top+rec.height/2);
+            text.setPosition(centerX,startY+2*spacing);
             window.draw(text);
+            // pf
             text.setString("PF: " + team.pf.name);
-            text.setPosition(400,350);
+            rec=text.getLocalBounds();
+            text.setOrigin(rec.left+rec.width/2, rec.top+rec.height/2);
+            text.setPosition(centerX,startY+3*spacing);
             window.draw(text);
+            // c
             text.setString("C: " + team.c.name);
-            text.setPosition(400,400);
+            rec=text.getLocalBounds();
+            text.setOrigin(rec.left+rec.width/2, rec.top+rec.height/2);
+            text.setPosition(centerX,startY+4*spacing);
             window.draw(text);
 
             window.draw(backButton);
@@ -190,6 +257,5 @@ int main(){
         }
         window.display();
     }
-
     return 0;
 }
