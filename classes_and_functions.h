@@ -1,6 +1,9 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 
@@ -9,28 +12,19 @@ struct Player{
     string team;
     string position;
 
-    float points, assists, rebounds, fg_pct, three_pm, blocks;
+    float ppg, apg, rpg, fg_pct, three_pm_pg, bpg, spg;
     //Points, Assists, Rebounds, Field Goal Percentage, Three Pointers Made, Blocks - All per game
     float grade;
+
+    int season_count = 1;//This will be used to calculate a player's career stats, not just one season in the dataset
+};
+struct TeamResult {
+    Player pg, sg, sf, pf, c;
 };
 
-float compute_grade(Player& p){
-    float final_grade;
-    if (p.position == "PG"){
-        final_grade = (p.points * 0.6 + p.assists * 0.4);
-    }
-    else if(p.position == "SG"){
-        final_grade = (p.points * 0.6 + p.three_pm * 0.4);
-    }
-    else if(p.position == "SF"){
-        final_grade = (p.points * 0.6 + p.rebounds * 0.4);
-    }
-    else if(p.position == "PF"){
-        final_grade = (p.fg_pct * 0.6 * 100 + p.rebounds * 0.4);//fg_pct is a percent, so x 100 to get value 
-    }
-    else if(p.position == "C"){
-        final_grade = (p.rebounds * 0.6 + p.blocks * 0.4);
-    }
-    p.grade = final_grade;
-    return final_grade;
-}
+float compute_grade(Player& p);
+
+// reads in data & returns vector of all players with all attributes we want
+vector<Player> load_players(const string& filename); 
+
+float guard_stof(const string& s);
