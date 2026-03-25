@@ -16,7 +16,8 @@ struct LogoButton {
 //but bad in other seasons, he is still likely to be picked
 int main(){
     vector<Player> players = load_players("player_per_game.csv");
-
+    sf::Font font;
+    font.loadFromFile("Burkhan.otf");
     //1 player can be on the rosters of multiple teams; their scores can also be different per team
     //cout << "Loaded " << all_players.size() << " data rows" << endl;
     //original data has 33280 rows, but after loading we have 25960 rows, so it was filtered by the constraint at least 10 minutes per game, and rows missing columns (Jack)
@@ -24,8 +25,6 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(1400,900), "NBA");
     float windowWidth=window.getSize().x;
     //float windowHeight=window.getSize().y;
-    sf::Font font;
-    font.loadFromFile("Burkhan.otf");
     //title line 1
     sf::Text titleLine1;
     titleLine1.setFont(font);
@@ -149,9 +148,44 @@ int main(){
     divider.setPosition(705,245);
     divider.setFillColor(sf::Color::Black);
 
+    // below is selection screen UI (nba logo, buttons for max heap and splay tree)
+    sf::Texture nbaTexture;
+    nbaTexture.loadFromFile("NBA/_NBA_logo.png");
+    sf::Sprite nbaLogo(nbaTexture);
+    nbaLogo.setScale(0.15f,0.15f);
+    nbaLogo.setPosition(30,30);
+    sf::RectangleShape heapBtn(sf::Vector2f(400,120));
+    heapBtn.setFillColor(sf::Color::White);
+    heapBtn.setOutlineColor(sf::Color::Black);
+    heapBtn.setOutlineThickness(4);
+    heapBtn.setPosition(500,300);
+    sf::Text heapText;
+    heapText.setFont(font);
+    heapText.setString("Max Heap");
+    heapText.setCharacterSize(40);
+    heapText.setFillColor(sf::Color::Black);
+    sf::FloatRect hB=heapText.getLocalBounds();
+    heapText.setOrigin(hB.width/2,hB.height/2);
+    heapText.setPosition(700,360);
+    sf::RectangleShape splayBtn(sf::Vector2f(400,120));
+    splayBtn.setFillColor(sf::Color::White);
+    splayBtn.setOutlineColor(sf::Color::Black);
+    splayBtn.setOutlineThickness(4);
+    splayBtn.setPosition(500,500);
+    sf::Text splayText;
+    splayText.setFont(font);
+    splayText.setString("Splay Tree");
+    splayText.setCharacterSize(40);
+    splayText.setFillColor(sf::Color::Black);
+    sf::FloatRect sB=splayText.getLocalBounds();
+    splayText.setOrigin(sB.width/2,sB.height/2);
+    splayText.setPosition(700,560);
+
     bool showTeam=false;
     TeamResult team;
     string selectedTeam="";
+    string selectedMode="";
+    bool showSelection=true;
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -161,34 +195,65 @@ int main(){
             if (event.type==sf::Event::MouseButtonPressed) {
                 int x=event.mouseButton.x;
                 int y=event.mouseButton.y;
-                if (!showTeam) {
-                    for (auto& b:buttons) {
+                if (showSelection) {
+                    if (heapBtn.getGlobalBounds().contains(x,y)) {
+                        selectedMode="heap";
+                        showSelection=false;
+                    }
+                    if (splayBtn.getGlobalBounds().contains(x,y)) {
+                        selectedMode="splay";
+                        showSelection=false;
+                    }
+                }
+                else if (!showTeam) {
+                    for (LogoButton& b:buttons) {
                         if (b.sprite.getGlobalBounds().contains(x,y)) {
-                            // for line below, might need an if statement differentiating between heap or splay tree
-                        team=build_different_team(players,b.teamCode);
+                            if (selectedMode=="heap") {
+                                team=build_different_team(players, b.teamCode);
+                            }
+                            if (selectedMode=="splay") {
+                                return 0;
+                                //team= ------; // need to add func
+                            }
                         selectedTeam=b.teamCode;
                         showTeam=true;
                         }
                     }
                 }
-                if (showTeam && backButton.getGlobalBounds().contains(x,y)) {
-                    showTeam=false;
+                if (backButton.getGlobalBounds().contains(x,y)) {
+                    if (showTeam==true) { // team screen -> Menu
+                        showTeam=false;
+                    }
+                    else if (showSelection==false) { // Menu -> Selection screensh
+                        showSelection=true;
+                    }
                 }
             }
         }
         window.clear(sf::Color(255,140,0));
+        // selection screen
+        if (showSelection) {
+            window.clear(sf::Color(255,140,0));
+            window.draw(nbaLogo);
+            window.draw(heapBtn);
+            window.draw(heapText);
+            window.draw(splayBtn);
+            window.draw(splayText);
+        }
         //Menu
-        if (!showTeam) {
+        else if (!showTeam) {
             window.draw(titleLine1);
             window.draw(titleLine2);
             window.draw(westText);
             window.draw(eastText);
             window.draw(divider);
-            for (auto& b:buttons) {
+            for (LogoButton& b:buttons) {
                 window.draw(b.sprite);
             }
+            window.draw(backButton); // so user can go back to selection screen
+            window.draw(backText);
         }
-        //View when you click on team
+        //View when you click on team. included interface setup too here for this screen
         else {
             sf::Text teamText;
             teamText.setFont(font);
