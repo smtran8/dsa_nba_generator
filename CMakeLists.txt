@@ -7,4 +7,6 @@ include_directories(.)
 
 add_executable(dsa_nba_generator
         classes_and_functions.h
-        splayTree.cpp)
+        splayTree.cpp
+        SplayTree.cpp
+)
