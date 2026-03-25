@@ -10,21 +10,24 @@ using namespace std;
 
 //Create a Splay tree class
 
-class SplayTree {
+struct SplayTree {
 
     //the splay tree will be composed of nodes, so it's needs a nested Node struct
     struct Node {
         //initalize the Node's attributes
         //FOR NOW, USE A BASIC DATA TO COMPARE
-        float testNum;
         Node* left;
         Node* right;
         Node* parent;
 
+        //each node will store a player object
+        Player thePlayer;
+        float player_grade = thePlayer.grade;
         //create function for the Node
         //constructor
-        Node(float num, Node* theParent) {
-            testNum = num;
+        Node(Player& thisPlayer, Node* theParent) {
+            //makeing testNum equal to the grade of the player, to making comparing easier
+            thePlayer = thisPlayer;
             left = nullptr;
             right = nullptr;
             parent = theParent;
@@ -192,31 +195,25 @@ class SplayTree {
 
     }
 
-
-
-
-
-
-
     //for this project, we will only need the insert and search methods
     //all of these are the same as a BST, but must splay accordiningly
 
     //create a helper for insert
-    Node* inserHelper(Node* root, int num) {
+    Node* inserHelper(Node* root, Player& thePlayer) {
         //insert logic for BSTs, as well as a pointer to keep track of the node we're inserting
         Node* temp = nullptr;
         if (root == nullptr) {
-            temp = new Node(num, root);
+            temp = new Node(thePlayer, root);
             return temp;
         }
-        if (num < root->testNum) {
-            root->left = inserHelper(root->left, num);
+        if (thePlayer.grade < root->player_grade) {
+            root->left = inserHelper(root->left, thePlayer);
             //also updating the parent pointer for each node
             root->left->parent = root;
             temp = root->left;
         }
         else {
-            root->right = inserHelper(root->right, num);
+            root->right = inserHelper(root->right, thePlayer);
             //also updating the parent pointer for each node
             root->right->parent = root;
             temp = root->right;
@@ -227,10 +224,10 @@ class SplayTree {
     }
 
     //insert
-    void insert(int num) {
+    void insert(Player& currentPlayer) {
 
         //call the helper
-        Node* temp = inserHelper(theRoot, num);
+        Node* temp = inserHelper(theRoot, currentPlayer);
 
         //splay the node adn assign it to the root
         theRoot = Splay(temp);
@@ -253,14 +250,14 @@ class SplayTree {
             return nullptr;
         }
         //if we found the id
-        else if (num == root->testNum) {
+        else if (num == root->player_grade) {
             //since we found it, splay it up in the tree
             Splay(root);
             //now return the node
             return root;
         }
         //if the id is less than
-        else if (num < root->testNum) {
+        else if (num < root->player_grade) {
             return search(root->left, num);
         }
         //if the id is greater than
@@ -281,7 +278,7 @@ class SplayTree {
             tempNode = findNum1(theNode->right, tempNode);
             //now check if the current node's value is greater than the tmep node's
             //if true, update temp
-            if (theNode->testNum > tempNode->testNum) {
+            if (theNode->player_grade > tempNode->player_grade) {
                 tempNode = theNode;
             }
         }
@@ -305,7 +302,6 @@ class SplayTree {
         return temp;
 
      }
-
 
 
     //postorder traversal helper function for the destructor
@@ -332,6 +328,20 @@ class SplayTree {
     }
 
 
+
+    public:
+    //create a function to add the players to the tree, using the insert function
+    void playersIntoTree(vector<Player>& players) {
+
+        //use a for loop to insert each player into a node for the tree
+        for (auto p : players) {
+            insert(p);
+        }
+
+    }
+
+    //this frucntion returns a teamResult, which is a collection of the best 5 players for that team
+    //TeamResult getTheTeam() {}
 
 
 
