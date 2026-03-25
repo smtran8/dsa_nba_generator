@@ -17,8 +17,6 @@ add_executable(dsa_nba_generator
         classes_and_functions.h
         max_heap.cpp
         max_heap.h
-        son_main.cpp
-        son_main.cpp
         max_heap.cpp
         SplayTree.cpp
         jovon_main.cpp

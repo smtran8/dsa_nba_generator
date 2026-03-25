@@ -9,31 +9,31 @@ using namespace std;
 
 
 //Create a Splay tree class
+struct Node {
+    //initalize the Node's attributes
+    //FOR NOW, USE A BASIC DATA TO COMPARE
+    Node* left;
+    Node* right;
+    Node* parent;
 
+    //each node will store a player object
+    Player thePlayer;
+    float player_grade = thePlayer.grade;
+    //create function for the Node
+    //constructor
+    Node(Player& thisPlayer, Node* theParent) {
+        //makeing testNum equal to the grade of the player, to making comparing easier
+        thePlayer = thisPlayer;
+        left = nullptr;
+        right = nullptr;
+        parent = theParent;
+    }
+
+};
 struct SplayTree {
 
     //the splay tree will be composed of nodes, so it's needs a nested Node struct
-    struct Node {
-        //initalize the Node's attributes
-        //FOR NOW, USE A BASIC DATA TO COMPARE
-        Node* left;
-        Node* right;
-        Node* parent;
 
-        //each node will store a player object
-        Player thePlayer;
-        float player_grade = thePlayer.grade;
-        //create function for the Node
-        //constructor
-        Node(Player& thisPlayer, Node* theParent) {
-            //makeing testNum equal to the grade of the player, to making comparing easier
-            thePlayer = thisPlayer;
-            left = nullptr;
-            right = nullptr;
-            parent = theParent;
-        }
-
-    };
 
     //the only attriubte the splay tree has is the root
     Node* theRoot;
@@ -200,26 +200,26 @@ struct SplayTree {
 
     //create a helper for insert
     Node* inserHelper(Node* root, Player& thePlayer) {
-        //insert logic for BSTs, as well as a pointer to keep track of the node we're inserting
-        Node* temp = nullptr;
+
         if (root == nullptr) {
-            temp = new Node(thePlayer, root);
-            return temp;
+            return new Node(thePlayer, nullptr);
+            //return temp;
         }
         if (thePlayer.grade < root->player_grade) {
-            root->left = inserHelper(root->left, thePlayer);
-            //also updating the parent pointer for each node
-            root->left->parent = root;
-            temp = root->left;
+            if (root->left == nullptr) {
+                root->left = new Node(thePlayer, root);
+                return root->left;
+            }
+            return inserHelper(root->left, thePlayer);
         }
         else {
-            root->right = inserHelper(root->right, thePlayer);
-            //also updating the parent pointer for each node
-            root->right->parent = root;
-            temp = root->right;
+            if (root->right == nullptr) {
+                root->right = new Node(thePlayer, root);
+                return root->right;
+            }
         }
 
-        return temp;
+        return inserHelper(root->right, thePlayer);
 
     }
 

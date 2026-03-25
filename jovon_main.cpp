@@ -3,6 +3,8 @@
 //
 #include "SplayTree.cpp"
 #include "classes_and_functions.h"
+#include <string>
+using namespace std;
 int main() {
     SplayTree sg_tree;
 
@@ -33,13 +35,16 @@ int main() {
     lebron.bpg = 5.0f;
     lebron.spg = 5.0f;
 
-    lebron.grade = 5.0f;
+    lebron.grade = 6.0f;
 
     vector<Player> players;
     players.push_back(jordan);
     players.push_back(lebron);
 
     sg_tree.playersIntoTree(players);
+
+    Node* node = sg_tree.search(sg_tree.theRoot, 5.0);
+    cout<<(node->player_grade)<<endl;
 
     return 0;
 }
