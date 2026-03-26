@@ -13,6 +13,7 @@ using namespace std;
 //this frucntion returns a teamResult, which is a collection of the best 5 players for that team
     TeamResult getTheTeam(const vector<Player> &all_players, string team_code) {
 
+    //LOGIC FROM SON'S BUILD TEAM FUNCTION FOR MAX HEAP, SO THAT EACH PLAYER ONLY HAS ONE POSITION (IN CASE THEY'VE PLAYED MULIPTLE ONES)
     unordered_map<string, Player> average_players;//Key is name, value is the actual Player object
     unordered_map<string, unordered_map<string, int>> position_counts; //Get this map to keep track of the most played positions for a player career
     //It is needed because for example, Kobe Bryant played mostly as a SG, but his last entries (last season) was a PF and our data picked up PF
@@ -68,6 +69,7 @@ using namespace std;
 
     SplayTree sgTree, pgTree, sfTree, pfTree, cTree;
 
+
         for (auto& pair : average_players){
             Player& p = pair.second;
             if (p.team == team_code){
@@ -90,14 +92,17 @@ using namespace std;
         }
 
         TeamResult result;
+        cout << "MAKING THE TEAM RESULT" << endl;
 
         result.pg=pgTree.findHighestGrade();
         result.sg=sgTree.findHighestGrade();
         result.sf=sfTree.findHighestGrade();
         result.pf=pfTree.findHighestGrade();
         result.c=cTree.findHighestGrade();
+        cout << "IS THIS WORKING" << endl;
 
-        cout << "Splay Tree Check";
+        cout << "Splay Tree Check" << endl;
+
         return result;
 
 

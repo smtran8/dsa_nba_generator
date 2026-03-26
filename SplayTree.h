@@ -363,7 +363,7 @@ struct SplayTree {
     Player findHighestGrade() {
 
         Node* temp = theRoot;
-        while (temp != nullptr) {
+        while (temp->right != nullptr) {
             temp = temp->right;
         }
 

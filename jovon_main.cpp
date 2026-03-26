@@ -10,6 +10,13 @@ int main() {
 
     vector<Player> players = load_players("player_per_game.csv");
 
-    getTheTeam(players, "LAL");
+    TeamResult result = getTheTeam(players, "LAL");
+    cout << result.pg.name << endl;
+    cout << result.sg.name << endl;
+    cout << result.sf.name << endl;
+    cout << result.pf.name << endl;
+    cout << result.c.name << endl;
+
+
     return 0;
 }
