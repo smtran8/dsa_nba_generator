@@ -66,12 +66,13 @@ TeamResult build_different_team(const vector<Player> &all_players, string team_c
         value_player.position = best_position;//Reset the position
         compute_grade(value_player);//Call compute grade again because the grades calculated in load_data is not equivalent any more
     }
-    for (auto& pair: average_players) {
-        Player& p = pair.second;
-        if (p.name == "Dwyane Wade") {
-            cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
-        }
-    }
+    //Reach here => Final Grade, Final Position
+    //for (auto& pair: average_players) {
+        //Player& p = pair.second;
+        //if (p.name == "Bam Adebayo" || p.name == "Hassan Whiteside") {
+            //cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
+        //}
+    //}
     MaxHeap pg_heap, sg_heap, sf_heap, pf_heap, c_heap;
     for (auto& pair : average_players){
         Player& p = pair.second;
