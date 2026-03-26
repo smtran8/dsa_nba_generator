@@ -3,13 +3,12 @@ project(dsa_nba_generator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(.)
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
 add_executable(dsa_nba_generator
         classes_and_functions.cpp
-        classes_and_functions.h
         max_heap.cpp
-        max_heap.h
         son_main.cpp
 )
+
 target_link_libraries(dsa_nba_generator sfml-graphics sfml-window sfml-system)
