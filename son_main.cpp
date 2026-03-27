@@ -153,8 +153,11 @@ int main(){
     sf::Texture nbaTexture;
     nbaTexture.loadFromFile("NBA/_NBA_logo.png");
     sf::Sprite nbaLogo(nbaTexture);
-    nbaLogo.setScale(0.15f,0.15f);
-    nbaLogo.setPosition(30,30);
+    nbaLogo.setScale(0.12f,0.12f);
+    nbaLogo.setPosition(50,150);
+    sf::Sprite nbaLogoRight(nbaTexture);
+    nbaLogoRight.setScale(0.12f,0.12f);
+    nbaLogoRight.setPosition(windowWidth-nbaLogoRight.getGlobalBounds().width-50,150);
     sf::RectangleShape heapBtn(sf::Vector2f(400,120));
     heapBtn.setFillColor(sf::Color::White);
     heapBtn.setOutlineColor(sf::Color::Black);
@@ -181,6 +184,24 @@ int main(){
     sf::FloatRect sB=splayText.getLocalBounds();
     splayText.setOrigin(sB.width/2,sB.height/2);
     splayText.setPosition(700,560);
+    // title 1
+    sf::Text titleSelScreen1;
+    titleSelScreen1.setFont(font);
+    titleSelScreen1.setString("NBA Generator");
+    titleSelScreen1.setCharacterSize(70);
+    titleSelScreen1.setFillColor(sf::Color::Black);
+    sf::FloatRect t1Bounds=titleSelScreen1.getLocalBounds();
+    titleSelScreen1.setOrigin(t1Bounds.left+t1Bounds.width/2,t1Bounds.top+t1Bounds.height/2);
+    titleSelScreen1.setPosition(windowWidth/2,60);
+    // title 2
+    sf::Text titleSelScreen2;
+    titleSelScreen2.setFont(font);
+    titleSelScreen2.setString("Choose Your Preferred Method");
+    titleSelScreen2.setCharacterSize(70);
+    titleSelScreen2.setFillColor(sf::Color::Black);
+    sf::FloatRect t2Bounds=titleSelScreen2.getLocalBounds();
+    titleSelScreen2.setOrigin(t2Bounds.left + t2Bounds.width/2,t2Bounds.top + t2Bounds.height/2);
+    titleSelScreen2.setPosition(windowWidth/2,140);
 
     bool showTeam=false;
     TeamResult team;
@@ -239,6 +260,9 @@ int main(){
             window.draw(heapText);
             window.draw(splayBtn);
             window.draw(splayText);
+            window.draw(titleSelScreen1);
+            window.draw(titleSelScreen2);
+            window.draw(nbaLogoRight);
         }
         //Menu
         else if (!showTeam) {
