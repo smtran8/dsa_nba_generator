@@ -95,7 +95,7 @@ using namespace std;
         }
 
         TeamResult result;
-        cout << "MAKING THE TEAM RESULT" << endl;
+        //cout << "MAKING THE TEAM RESULT" << endl;
 
         result.pg=pgTree.findHighestGrade();
         result.sg=sgTree.findHighestGrade();
@@ -104,7 +104,7 @@ using namespace std;
         result.c=cTree.findHighestGrade();
         //cout << "IS THIS WORKING" << endl;
 
-        cout << "Splay Tree Check" << endl;
+        //cout << "Splay Tree Check" << endl;
 
         return result;
 
