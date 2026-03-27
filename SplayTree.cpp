@@ -59,12 +59,12 @@ using namespace std;
         value_player.position = best_position;//Reset the position
         compute_grade(value_player);//Call compute grade again because the grades calculated in load_data is not equivalent any more
     }
-    for (auto& pair: average_players) {
-        Player& p = pair.second;
-        if (p.name == "Dwyane Wade") {
-            cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
-        }
-    }
+    //for (auto& pair: average_players) {
+        //Player& p = pair.second;
+        //if (p.name == "Dwyane Wade") {
+            //cout << p.name << "team " << p.team << "position " << p.position << "Grades: " << p.grade<< endl;
+        //}
+    //}
 
 
     SplayTree sgTree, pgTree, sfTree, pfTree, cTree;
@@ -99,7 +99,7 @@ using namespace std;
         result.sf=sfTree.findHighestGrade();
         result.pf=pfTree.findHighestGrade();
         result.c=cTree.findHighestGrade();
-        cout << "IS THIS WORKING" << endl;
+        //cout << "IS THIS WORKING" << endl;
 
         cout << "Splay Tree Check" << endl;
 

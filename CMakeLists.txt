@@ -19,9 +19,10 @@ add_executable(dsa_nba_generator
         max_heap.h
         max_heap.cpp
         SplayTree.cpp
-#        jovon_main.cpp
         SplayTree.h
-        son_main.cpp
+        jovon_main.cpp
+        jovon_main.cpp
+
 )
 target_link_libraries(dsa_nba_generator sfml-graphics sfml-window sfml-system)
 add_custom_command(TARGET dsa_nba_generator POST_BUILD
