@@ -92,16 +92,16 @@ using namespace std;
         }
 
         TeamResult result;
-        cout << "MAKING THE TEAM RESULT" << endl;
+        //cout << "MAKING THE TEAM RESULT" << endl;
 
         result.pg=pgTree.findHighestGrade();
         result.sg=sgTree.findHighestGrade();
         result.sf=sfTree.findHighestGrade();
         result.pf=pfTree.findHighestGrade();
         result.c=cTree.findHighestGrade();
-        cout << "IS THIS WORKING" << endl;
+        //cout << "IS THIS WORKING" << endl;
 
-        cout << "Splay Tree Check" << endl;
+        //cout << "Splay Tree Check" << endl;
 
         return result;
 

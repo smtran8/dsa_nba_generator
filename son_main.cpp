@@ -3,6 +3,7 @@
 #include "classes_and_functions.h"
 #include "max_heap.h"
 #include <iostream>
+#include "SplayTree.h"
 #include <string>
 #include <map>
 using namespace std;
@@ -212,8 +213,7 @@ int main(){
                                 team=build_different_team(players, b.teamCode);
                             }
                             if (selectedMode=="splay") {
-                                return 0;
-                                //team= ------; // need to add func
+                                team=getTheTeam(players, b.teamCode);
                             }
                         selectedTeam=b.teamCode;
                         showTeam=true;
