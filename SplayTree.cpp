@@ -73,6 +73,9 @@ using namespace std;
         for (auto& pair : average_players){
             Player& p = pair.second;
             if (p.team == team_code){
+                if (p.season_count < 3) {
+                    continue;
+                }
                 if (p.position == "PG"){
                     pgTree.insert(p);
                 }
