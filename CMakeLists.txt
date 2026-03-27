@@ -13,21 +13,17 @@ FetchContent_MakeAvailable(SFML)
 
 include_directories(.)
 add_executable(dsa_nba_generator
+
         classes_and_functions.cpp
-        classes_and_functions.h
-        max_heap.cpp
-        max_heap.h
         max_heap.cpp
         SplayTree.cpp
-        SplayTree.h
-        jovon_main.cpp
-        jovon_main.cpp
-
+        #jovon_main.cpp
+        son_main.cpp
 )
 target_link_libraries(dsa_nba_generator sfml-graphics sfml-window sfml-system)
-add_custom_command(TARGET dsa_nba_generator POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_RUNTIME_DLLS:dsa_nba_generator>
-        $<TARGET_FILE_DIR:dsa_nba_generator>
-        COMMAND_EXPAND_LISTS
-)
+#add_custom_command(TARGET dsa_nba_generator POST_BUILD
+        #COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        #$<TARGET_RUNTIME_DLLS:dsa_nba_generator>
+        #$<TARGET_FILE_DIR:dsa_nba_generator>
+        #COMMAND_EXPAND_LISTS
+#) => Don't need for Mac

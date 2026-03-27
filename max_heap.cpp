@@ -42,6 +42,7 @@ TeamResult build_different_team(const vector<Player> &all_players, string team_c
         }
         position_counts[p.name][p.position]++; //We will take the most frequent positions
     }
+
     for (auto& pair : average_players) {
         string key_name = pair.first;
         Player& value_player = pair.second;
@@ -77,6 +78,9 @@ TeamResult build_different_team(const vector<Player> &all_players, string team_c
     for (auto& pair : average_players){
         Player& p = pair.second;
         if (p.team == team_code){
+            if (p.season_count < 3) {//The player needs to play at least 3 seasons to be counted
+                continue;
+            }
             if (p.position == "PG"){
                 pg_heap.insert(p);
             }
