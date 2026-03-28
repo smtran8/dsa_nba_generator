@@ -253,12 +253,6 @@ struct SplayTree {
 
 
 
-
-
-
-
-    //searches for the 5 diff positions
-
     //search for a splay tree is the same logic as a BST, just with splaying at the end
     Node* search(Node* root, float num) {
 
@@ -282,43 +276,6 @@ struct SplayTree {
             return search(root->right, num);
         }
     }
-
-    //helper functions for the find functions
-    Node* findNum1(Node* theNode, Node* tempNode) {
-       //we need to go through each node in the tree, so use traversal logic
-
-        if (theNode == nullptr) {
-            return tempNode;
-        }
-        else {
-            tempNode = findNum1(theNode->left, tempNode);
-            tempNode = findNum1(theNode->right, tempNode);
-            //now check if the current node's value is greater than the tmep node's
-            //if true, update temp
-            if (theNode->player_grade > tempNode->player_grade) {
-                tempNode = theNode;
-            }
-        }
-
-        return tempNode;
-
-
-    }
-
-
-    //the find functions will be used to find and retunr the node with the highest values
-    //in our case, the best player per position
-    Node* getNum1() {
-
-        //create a temp node
-        Node* temp = theRoot;
-
-        //call the helper
-        temp = findNum1(theRoot, temp);
-
-        return temp;
-
-     }
 
 
     //postorder traversal helper function for the destructor
