@@ -21,9 +21,9 @@ add_executable(dsa_nba_generator
         son_main.cpp
 )
 target_link_libraries(dsa_nba_generator sfml-graphics sfml-window sfml-system)
-#add_custom_command(TARGET dsa_nba_generator POST_BUILD
-        #COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        #$<TARGET_RUNTIME_DLLS:dsa_nba_generator>
-        #$<TARGET_FILE_DIR:dsa_nba_generator>
-        #COMMAND_EXPAND_LISTS
-#) => Don't need for Mac
+add_custom_command(TARGET dsa_nba_generator POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_RUNTIME_DLLS:dsa_nba_generator>
+        $<TARGET_FILE_DIR:dsa_nba_generator>
+        COMMAND_EXPAND_LISTS
+)

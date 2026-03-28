@@ -65,7 +65,8 @@ public:
         }
         return heap[0];
     }
-    Player extract_max(){
+//When I first constructed the heap, I thought the functions below would be needed; but peek is already enough for our scope
+    /*Player extract_max(){
         if(is_empty()){//If heap is empty, throw an error
             throw runtime_error("Heap is empty on extract max");
         }
@@ -88,7 +89,7 @@ public:
             top_players.push_back(extract_max());
         }
         return top_players;
-    }
+    }*/
 };
 void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks);
 TeamResult build_different_team(const vector<Player> &all_players, string team_code);
