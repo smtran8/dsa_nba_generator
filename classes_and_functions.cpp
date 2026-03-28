@@ -23,7 +23,7 @@ float compute_grade(Player& p){ //Rank players based on this final grade
         //Really pay attention to this fg_pct => Check Jack's data handling => Jack uses decimal, so no problem
     }
     else if(p.position == "C"){
-        final_grade = (p.rpg * 0.35 + p.bpg * 0.30 + p.ppg * 0.20 + p.fg_pct * 0.10 * 50 + p.apg * 0.05);
+        final_grade = (p.rpg * 0.35 + p.bpg * 0.30 + p.ppg * 0.20 + p.fg_pct * 0.10 * 50 + p.apg * 0.05);//0.2 => 0.4 for Clippers
     }
     p.grade = final_grade;
     return final_grade;
