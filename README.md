@@ -33,3 +33,6 @@ Now you are set to explore the best 5 roster for your team! For example let's st
 <img width="1399" height="925" alt="image" src="https://github.com/user-attachments/assets/b6321744-5694-4a54-9f36-915e34996341" />
 <br>
 This is the best 5 roster for Lakers, feel free to explore other teams as well. Note that you might not agree with our best 5, and that is okay because you might have different standards for attributes that defines a position. To change this attribute, go to classes_and_functions.cpp, look into the function compute_grade() and change the portion of whatever attribute you want.
+
+Note:
+Some players' names might have weird font writing due to special characters in their names; this is not an issue of our data processing code but rather the dataset’s issue.
