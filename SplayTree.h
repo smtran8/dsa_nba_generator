@@ -278,43 +278,29 @@ struct SplayTree {
     }
 
 
-    //postorder traversal helper function for the destructor
-    void postOrderHelper(Node* theNode) {
+    // //postorder traversal helper function for the destructor
+    // void postOrderHelper(Node* theNode) {
+    //
+    //     if (theNode == nullptr) {
+    //         return;
+    //     }
+    //     else {
+    //         postOrderHelper(theNode->left);
+    //         postOrderHelper(theNode->right);
+    //         delete theNode;
+    //     }
+    //
+    // }
+    //
+    //
+    // //Destructor for the tree, using post order traveslar, as we need to go through the dree and delte each node
+    // ~SplayTree() {
+    //
+    //     //call the helper function
+    //     postOrderHelper(theRoot);
+    //     theRoot = nullptr;
+    // }
 
-        if (theNode == nullptr) {
-            return;
-        }
-        else {
-            postOrderHelper(theNode->left);
-            postOrderHelper(theNode->right);
-            delete theNode;
-        }
-
-    }
-
-
-    //Destructor for the tree, using post order traveslar, as we need to go through the dree and delte each node
-    ~SplayTree() {
-
-        //call the helper function
-        postOrderHelper(theRoot);
-        theRoot = nullptr;
-    }
-
-
-
-    public:
-    //create a function to add the players to the tree, using the insert function
-    void playersIntoTree(vector<Player>& players) {
-
-        //use a for loop to insert each player into a node for the tree
-        for (auto p : players) {
-            insert(p);
-        }
-
-
-
-    }
 
     //this function will go through the rightside of the tree to return the pkayer with highest grade
     Player findHighestGrade() {
@@ -323,7 +309,7 @@ struct SplayTree {
         while (temp->right != nullptr) {
             temp = temp->right;
         }
-
+        Splay(temp);
         return temp->thePlayer;
     }
 
