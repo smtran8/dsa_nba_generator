@@ -15,6 +15,7 @@ Dataset: https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats?select=P
 
 - We built our interface using SFML in main.cpp. You'll just have to run this file to see our program. However, please note that SFML requires a Cmake file to build and run the program, therefore this is an example of how I write my CMakeLists on Window. You could use any method of CMake that you feel comfortable, but our method uses fetching content from SFML github repository. Please also pay attention to our SFML version to ensure no mismatch occurs.
 
+**Code Example for CMake:**
 cmake_minimum_required(VERSION 3.26)
 project(dsa_nba_generator)
 set(CMAKE_CXX_STANDARD 14)
