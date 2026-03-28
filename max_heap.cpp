@@ -5,7 +5,7 @@
 #include "max_heap.h"
 using namespace std;
 
-void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks){
+/*void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks){
     Player p;
     p.name = name;
     p.team = team;  
@@ -18,13 +18,13 @@ void add_players(vector<Player>& players, string name, string team, string pos, 
     p.bpg = blocks;
     compute_grade(p);
     players.push_back(p);
-}
+}*/
 
 TeamResult build_different_team(const vector<Player> &all_players, string team_code){
     unordered_map<string, Player> average_players;//Key is name, value is the actual Player object
     unordered_map<string, unordered_map<string, int>> position_counts; //Get this map to keep track of the most played positions for a player career
     //It is needed because for example, Kobe Bryant played mostly as a SG, but his last entries (last season) was a PF and our data picked up PF
-    for (const auto& p : all_players) {
+    for (auto& p : all_players) {
         if (p.team !=team_code) {
             continue;
         }

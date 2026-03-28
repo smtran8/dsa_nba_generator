@@ -30,7 +30,7 @@ class MaxHeap{
             i = find_parent(i);
         }
     }
-    void heapify_down(int i){ //Used for after extracting the max, the last node placed at root might be too small => heapify down
+    void heapify_down(int i){ //Used for after extzracting the max, the last node placed at root might be too small => heapify down
         int largest = i;
         int left = find_left_child(i);
         int right = find_right_child(i);
@@ -91,5 +91,6 @@ public:
         return top_players;
     }*/
 };
-void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks);
+//This function add_players is just used for testing, not in real application
+//void add_players(vector<Player>& players, string name, string team, string pos, float pts, float ast, float reb, float fg_pct, float three_pm, float blocks);
 TeamResult build_different_team(const vector<Player> &all_players, string team_code);
